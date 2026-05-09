@@ -9,12 +9,23 @@ import userModel from "./user.model.js";
 import roleModel from "./role.model.js";
 
 // Creamos una instancia de Sequelize con los parámetros de configuración
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,          // Dirección del servidor de la base de datos
-  dialect: dbConfig.dialect,    // Tipo de base de datos (por ejemplo, 'mysql', 'postgres')
-  pool: dbConfig.pool,          // Configuración del pool de conexiones
-  port: dbConfig.PORT,          // Puerto en el que se conecta a la base de datos
-});
+const sequelize = process.env.DATABASE_URL
+  ? new Sequelize(process.env.DATABASE_URL, {
+      dialect: "postgres",
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      },
+      pool: dbConfig.pool
+    })
+  : new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+      host: dbConfig.HOST,          // Dirección del servidor de la base de datos
+      dialect: dbConfig.dialect,    // Tipo de base de datos (por ejemplo, 'mysql', 'postgres')
+      pool: dbConfig.pool,          // Configuración del pool de conexiones
+      port: dbConfig.PORT,          // Puerto en el que se conecta a la base de datos
+    });
 
 // Creamos un objeto para almacenar los modelos y la instancia de Sequelize
 const db = {};

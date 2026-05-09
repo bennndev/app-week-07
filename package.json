@@ -1,0 +1,13 @@
+{
+  "name": "app-week-07",
+  "private": true,
+  "workspaces": [
+    "api",
+    "ui"
+  ],
+  "scripts": {
+    "api": "yarn workspace api start",
+    "ui": "yarn workspace ui dev",
+    "build:ui": "yarn workspace ui build"
+  }
+}

@@ -18,10 +18,12 @@ import userRoutes from "./app/routes/user.routes.js";
 // Crea una instancia de la aplicación Express
 const app = express();
 
+import "dotenv/config";
+
 // configura las opciones de CORS para permitir acceso desde el frontend
 // en el puerto 5173
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
 };
 
 // Aplica el middleware de CORS a la aplicación
